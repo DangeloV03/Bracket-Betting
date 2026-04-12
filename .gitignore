@@ -1,0 +1,21 @@
+# Dependencies
+frontend/node_modules/
+backend/venv/
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/.vercel/
+
+# Env files (never commit secrets)
+frontend/.env.local
+backend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Misc
+.DS_Store
+*.log
