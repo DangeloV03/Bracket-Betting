@@ -19,6 +19,7 @@ app.include_router(leaderboard.router)
 app.include_router(admin.router)
 
 
+@app.get("/")
 @app.get("/health")
 async def health():
     return {"status": "ok"}
