@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/d_angel/Bracket_Betting && vercel git connect --yes 2>&1)"
+    ]
+  }
+}
