@@ -1,4 +1,5 @@
 """Verify Supabase JWT tokens coming from the frontend."""
+import base64
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
@@ -8,6 +9,16 @@ from app.core.supabase import supabase
 bearer_scheme = HTTPBearer()
 
 
+def _jwt_secret() -> str | bytes:
+    """Supabase stores the JWT secret as base64 in the dashboard.
+    GoTrue decodes it before signing, so we must decode before verifying."""
+    secret = settings.jwt_secret.strip()
+    try:
+        return base64.b64decode(secret)
+    except Exception:
+        return secret
+
+
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
 ) -> dict:
@@ -15,7 +26,7 @@ async def get_current_user(
     try:
         payload = jwt.decode(
             token,
-            settings.jwt_secret,
+            _jwt_secret(),
             algorithms=["HS256"],
             options={"verify_aud": False},
         )
